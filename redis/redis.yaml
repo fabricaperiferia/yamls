@@ -1,0 +1,43 @@
+apiVersion: v1 
+kind: Namespace 
+metadata:
+  name: demo-ath
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redisdb
+  namespace: demo-ath
+  labels:
+    app: redisdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redisdb
+  template:
+    metadata:
+      labels:
+        app: redisdb
+    spec:
+      containers:
+      - name: redisdb
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redisdb-service
+  namespace: demo-ath
+  labels:
+    run: redisdb-service
+spec:
+  type: NodePort
+  ports:
+  - port: 6379
+    protocol: TCP
+  selector:
+    app: redisdb

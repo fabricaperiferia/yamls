@@ -1,0 +1,43 @@
+apiVersion: v1 
+kind: Namespace 
+metadata:
+  name: demo-ath
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cassandradb
+  namespace: demo-ath
+  labels:
+    app: cassandradb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cassandradb
+  template:
+    metadata:
+      labels:
+        app: cassandradb
+    spec:
+      containers:
+      - name: cassandradb
+        image: cassandra:latest
+        ports:
+        - containerPort: 7000
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandradb-service
+  namespace: demo-ath
+  labels:
+    run: cassandradb-service
+spec:
+  type: NodePort
+  ports:
+  - port: 6379
+    protocol: TCP
+  selector:
+    app: cassandradb

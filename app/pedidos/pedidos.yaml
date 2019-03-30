@@ -1,0 +1,39 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: pedidos-deployment
+  namespace: demo-ath
+  labels:
+    app: pedidos 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pedidos
+  template:
+    metadata:
+      labels:
+        app: pedidos
+    spec:
+      containers:
+      - name: pedidos
+        image: periferiafactory/pedidos:v1
+        ports:
+        - containerPort: 9000
+      imagePullSecrets:
+      - name: regcred 
+--- 
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: pedidos-service
+  namespace: demo-ath
+  labels:
+    run: pedidos-service 
+spec:
+  type: NodePort
+  ports:
+  - port: 9000
+    protocol: TCP
+  selector:
+    app: pedidos
