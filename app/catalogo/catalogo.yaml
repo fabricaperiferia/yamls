@@ -1,43 +1,39 @@
 apiVersion: apps/v1 
 kind: Deployment 
 metadata:
-  name: front-deployment
+  name: catalogo-deployment
   namespace: demo-ath
   labels:
-    app: front 
+    app: catalogo 
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: front
+      app: catalogo
   template:
     metadata:
       labels:
-        app: front
+        app: catalogo
     spec:
       containers:
-      - name: front
-        image: periferiafactory/front:v1
+      - name: catalogo
+        image: periferiafactory/catalogo:v1
         ports:
-        - containerPort: 8100
+        - containerPort: 3000
       imagePullSecrets:
       - name: regcred 
 --- 
 apiVersion: v1 
 kind: Service 
 metadata:
-  name: front-service
+  name: catalogo-service
   namespace: demo-ath
   labels:
-    run: front-service 
+    run: catalogo-service 
 spec:
   type: NodePort
   ports:
-  - name: http
-    port: 80
+  - port: 3000
     protocol: TCP
-    targetPort: 8100
-  externalIPs:
-  - 172.168.10.52
   selector:
-    app: front
+    app: catalogo
