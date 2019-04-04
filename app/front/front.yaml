@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: front
-        image: periferiafactory/front:v1
+        image: periferiafactory/front:v3
         ports:
         - containerPort: 8100
       imagePullSecrets:

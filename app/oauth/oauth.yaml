@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: oauth
-        image: periferiafactory/oauth:v1
+        image: periferiafactory/oauth:v2
         ports:
         - containerPort: 8080
       imagePullSecrets:

@@ -6,7 +6,7 @@ metadata:
   labels:
     app: pedidos 
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: pedidos
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: pedidos
-        image: periferiafactory/pedidos:v1
+        image: periferiafactory/pedidos:v3
         ports:
         - containerPort: 9000
       imagePullSecrets:
