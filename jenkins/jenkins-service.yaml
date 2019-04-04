@@ -1,0 +1,18 @@
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: jenkins-service
+  namespace: demo-ath
+  labels:
+    run: jenkins-service
+spec:
+  ports:
+    - name: jnlp
+      port: 50000
+      targetPort: 50000
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: jenkins
+  type: NodePort
